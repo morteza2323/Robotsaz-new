@@ -1,14 +1,13 @@
 import "server-only";
 import { ProjectVideo } from "@/lib/types";
 
-const apiBase = "https://napi.arvancloud.ir/vod/2.0";
 const maxVideoBytes = 300 * 1024 * 1024;
 const allowedTypes = new Set(["video/mp4", "video/webm", "video/quicktime"]);
 
 function config() {
-  const apiKey = process.env.ARVAN_VOD_API_KEY;
-  if (!apiKey) throw new Error("Arvan VOD is not configured.");
-  return { apiKey, channelName: process.env.ARVAN_VOD_CHANNEL_NAME || "robotsaz" };
+  const apiKey = process.env.ARVAN_VOD_API_KEY; const apiBase = process.env.ARVAN_VOD_API_BASE; const channelName = process.env.ARVAN_VOD_CHANNEL_NAME;
+  if (!apiKey || !apiBase || !channelName) throw new Error("Video service is not configured.");
+  return { apiKey, apiBase: apiBase.replace(/\/$/, ""), channelName };
 }
 
 function headers(apiKey: string) { return { Authorization: `Apikey ${apiKey}` }; }
@@ -20,7 +19,7 @@ async function responseJson(response: Response) {
 }
 
 async function channelId() {
-  const { apiKey, channelName } = config();
+  const { apiKey, apiBase, channelName } = config();
   const response = await fetch(`${apiBase}/channels?filter=${encodeURIComponent(channelName)}`, { headers: headers(apiKey), cache: "no-store" });
   const body = await responseJson(response);
   const candidates = (body.data || body) as unknown;
@@ -33,7 +32,7 @@ async function channelId() {
 export async function uploadProjectVideo(file: File, title: string): Promise<ProjectVideo> {
   if (!allowedTypes.has(file.type)) throw new Error("Choose an MP4, WebM, or MOV video.");
   if (file.size > maxVideoBytes) throw new Error("Videos must be 300 MB or smaller.");
-  const { apiKey } = config(); const channel = await channelId();
+  const { apiKey, apiBase } = config(); const channel = await channelId();
   const metadata = `filename ${Buffer.from(file.name).toString("base64")},filetype ${Buffer.from(file.type).toString("base64")}`;
   const create = await fetch(`${apiBase}/channels/${channel}/files`, { method: "POST", headers: { ...headers(apiKey), "tus-resumable": "1.0.0", "upload-length": String(file.size), "upload-metadata": metadata } });
   if (!create.ok) throw new Error("Arvan VOD could not create an upload.");
@@ -51,13 +50,13 @@ export async function uploadProjectVideo(file: File, title: string): Promise<Pro
 }
 
 export async function deleteProjectVideo(videoId: string) {
-  const { apiKey } = config();
+  const { apiKey, apiBase } = config();
   const response = await fetch(`${apiBase}/videos/${encodeURIComponent(videoId)}`, { method: "DELETE", headers: headers(apiKey) });
   await responseJson(response);
 }
 
 export async function getProjectVideo(videoId: string, fallbackTitle: string): Promise<ProjectVideo> {
-  const { apiKey } = config();
+  const { apiKey, apiBase } = config();
   const response = await fetch(`${apiBase}/videos/${encodeURIComponent(videoId)}`, { headers: headers(apiKey), cache: "no-store" });
   const body = await responseJson(response); const video = (body.data || body) as Record<string, unknown>;
   const rawStatus = String(video.status || video.state || "processing").toLowerCase();

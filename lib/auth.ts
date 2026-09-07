@@ -5,9 +5,9 @@ const cookieName = "forgeworks_admin";
 const encoder = new TextEncoder();
 
 function secret() {
-  return encoder.encode(
-    process.env.JWT_SECRET || "development-only-change-this-jwt-secret-before-deploying",
-  );
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!jwtSecret) throw new Error("JWT_SECRET is not configured.");
+  return encoder.encode(jwtSecret);
 }
 
 export type AdminSession = { email: string; role: "admin" };

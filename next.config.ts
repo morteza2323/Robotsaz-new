@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "robotsaz-portfolio.s3.ir-thr-at1.arvanstorage.ir" },
+      { protocol: "https", hostname: process.env.NEXT_PUBLIC_MEDIA_HOSTNAME || "invalid.local" },
     ],
   },
   experimental: {
