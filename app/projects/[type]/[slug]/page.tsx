@@ -55,7 +55,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <p className="mt-6 max-w-lg text-lg leading-8 text-[#61706b]">{project.summary}</p>
             <div className="mt-7 flex flex-wrap gap-2">{project.tags.map((tag) => <span key={tag} className="rounded-full bg-[#dfe5dc] px-3 py-1.5 text-xs font-bold uppercase tracking-[.08em] text-[#53625b]">{tag}</span>)}</div>
           </div>
-          <div className="relative aspect-[1.25] overflow-hidden rounded-2xl bg-[#dfe5dc]"><Image src={project.image} alt={project.title} fill priority sizes="(max-width: 1024px) 100vw, 60vw" className="object-cover" /></div>
+          <div className="relative aspect-[1.25] overflow-hidden rounded-2xl bg-[#dfe5dc]"><Image unoptimized src={project.image} alt={project.title} fill priority sizes="(max-width: 1024px) 100vw, 60vw" className="object-cover" /></div>
         </div>
       </section>
       <section className="border-y border-[#d5dad2] bg-white py-16 md:py-24">

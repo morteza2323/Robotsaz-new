@@ -8,7 +8,7 @@ export function ProjectCard({ project, compact = false }: { project: Project; co
   return (
     <Link href={href} className={`group card block ${compact ? "min-w-[280px]" : ""}`}>
       <div className="relative aspect-[1.25] overflow-hidden bg-[#d7ded8]">
-        <Image src={project.image} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
+        <Image unoptimized src={project.image} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
         <div className="image-overlay absolute inset-0" />
         <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
           <span className="text-xs font-bold uppercase tracking-[.14em]">{project.kind === "industry" ? "Industrial" : "3D Printing"}</span>
