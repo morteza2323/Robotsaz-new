@@ -4,8 +4,9 @@ import { ProjectSlider } from "@/components/project-slider";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { getFeaturedProjects } from "@/lib/projects";
+import { CustomPartForm } from "@/components/custom-part-form";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 const advantages = [
   ["One capable team", "From CAD to installation, a connected team takes ownership of the entire job.", Boxes],
@@ -27,7 +28,7 @@ export default async function HomePage() {
             <Reveal><p className="eyebrow !text-[#c7f36b]">Industrial ingenuity, made tangible</p></Reveal>
             <Reveal delay={.08}><h1 className="display mt-6">Built for<br /><span className="text-[#c7f36b]">what is next.</span></h1></Reveal>
             <Reveal delay={.16}><p className="mt-7 max-w-xl text-lg leading-8 text-[#d7e0db]">ForgeWorks creates the machinery, systems, prototypes, and production tools that carry ambitious ideas into the real world.</p></Reveal>
-            <Reveal delay={.24} className="mt-8 flex flex-wrap gap-3"><Link href="/projects/industry" className="button button-primary">Explore our work <ArrowRight size={17} /></Link><Link href="/contact" className="button border border-white/30 text-white hover:border-white">Start a conversation</Link></Reveal>
+            <Reveal delay={.24} className="mt-8 flex flex-wrap gap-3"><Link href="/projects/industry" className="button button-primary">Explore our work <ArrowRight size={17} /></Link><Link href="#custom-part-request" className="button border border-white/30 text-white hover:border-white">Request a custom part</Link></Reveal>
           </div>
           <div className="absolute bottom-7 right-0 hidden text-right md:block"><p className="text-xs font-bold uppercase tracking-[.2em] text-[#c7f36b]">Independent. Precise. Practical.</p><p className="mt-2 text-sm text-[#c3d0c8]">Fabrication + additive manufacturing</p></div>
         </div>
@@ -73,6 +74,7 @@ export default async function HomePage() {
       <section className="container pb-18 md:pb-28">
         <div className="relative overflow-hidden rounded-2xl bg-[#c7f36b] p-8 md:p-14"><div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/3 rounded-full border-[28px] border-[#10201e]/10" /><div className="relative grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><p className="eyebrow !text-[#506927]">Custom projects, welcome</p><h2 className="heading mt-4 max-w-2xl">Have a difficult thing to make?</h2><p className="mt-4 max-w-lg leading-7 text-[#263724]">Tell us what needs to work better. We will help you find a robust route from idea to finished project.</p></div><Link href="/contact" className="button button-dark w-fit">Talk to our team <ArrowRight size={17} /></Link></div></div>
       </section>
+      <section className="container pb-18 md:pb-28"><CustomPartForm /></section>
     </>
   );
 }

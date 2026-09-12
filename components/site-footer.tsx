@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getSiteConfig } from "@/lib/site-config";
 
 const groups = [
   { title: "Explore", links: [["Home", "/"], ["Industrial projects", "/projects/industry"], ["3D printing", "/projects/3d-printing"]] },
@@ -6,13 +7,14 @@ const groups = [
 ];
 
 export function SiteFooter() {
+  const { contactEmail } = getSiteConfig();
   return (
     <footer className="bg-[#10201e] py-14 text-[#f4f4ef]">
       <div className="container grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
         <div>
           <div className="text-2xl font-black tracking-[-.08em]">FORGEWORKS</div>
           <p className="mt-4 max-w-xs text-sm leading-6 text-[#b7c3bd]">Industrial problem-solving and additive manufacturing, built with care from first sketch to final install.</p>
-          <a href="mailto:hello@forgeworks.example" className="mt-5 inline-block text-sm font-bold text-[#c7f36b]">hello@forgeworks.example</a>
+          <a href={`mailto:${contactEmail}`} className="mt-5 inline-block text-sm font-bold text-[#c7f36b]">{contactEmail}</a>
         </div>
         {groups.map((group) => (
           <div key={group.title}>

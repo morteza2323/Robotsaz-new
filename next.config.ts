@@ -1,10 +1,13 @@
 import type { NextConfig } from "next";
 
+const mediaHostname = process.env.NEXT_PUBLIC_MEDIA_HOSTNAME;
+if (!mediaHostname) throw new Error("NEXT_PUBLIC_MEDIA_HOSTNAME is not configured.");
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: process.env.NEXT_PUBLIC_MEDIA_HOSTNAME || "invalid.local" },
+      { protocol: "https", hostname: mediaHostname },
     ],
   },
   experimental: {

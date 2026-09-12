@@ -24,3 +24,8 @@ export const projectSchema = z.object({
 });
 
 export type ProjectInput = z.infer<typeof projectSchema>;
+
+export const customPartRequestSchema = z.object({
+  name: z.string().trim().min(2).max(80), email: z.string().trim().email().max(160), phone: z.string().trim().min(7).max(30),
+  description: z.string().trim().min(20).max(4000), quantity: z.string().trim().max(40).optional(), material: z.string().trim().max(80).optional(), website: z.string().max(0).optional(),
+});

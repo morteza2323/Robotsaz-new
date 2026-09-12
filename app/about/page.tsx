@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Award, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
+import { getSiteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = { title: "About us" };
 
@@ -24,6 +25,7 @@ const strengths = [
 ];
 
 export default function AboutPage() {
+  const { companyAddress, mapEmbedUrl } = getSiteConfig();
   return (
     <>
       <section className="container py-16 md:py-24">
@@ -115,9 +117,7 @@ export default function AboutPage() {
                 <span>
                   <strong>ForgeWorks Studio</strong>
                   <br />
-                  45 Foundry Lane
-                  <br />
-                  Industrial District
+                  {companyAddress}
                 </span>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function AboutPage() {
                 title="ForgeWorks location"
                 className="h-full min-h-[320px] w-full border-0"
                 loading="lazy"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-0.142%2C51.497%2C-0.122%2C51.507&amp;layer=mapnik"
+                src={mapEmbedUrl}
               />
             </div>
           </div>

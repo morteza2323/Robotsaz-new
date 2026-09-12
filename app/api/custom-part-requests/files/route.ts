@@ -1,0 +1,4 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getAdminSession } from "@/lib/auth";
+import { downloadCustomPartFile } from "@/lib/arvan";
+export async function GET(request: NextRequest) { if (!(await getAdminSession())) return NextResponse.json({ message: "Unauthorised" }, { status: 401 }); try { const key = request.nextUrl.searchParams.get("key") || ""; const name = request.nextUrl.searchParams.get("name") || "attachment"; const object = await downloadCustomPartFile(key); if (!object.Body) throw new Error(); return new NextResponse(object.Body.transformToWebStream() as ReadableStream, { headers: { "Content-Type": object.ContentType || "application/octet-stream", "Content-Disposition": `attachment; filename*=UTF-8''${encodeURIComponent(name)}` } }); } catch { return NextResponse.json({ message: "File not found." }, { status: 404 }); } }

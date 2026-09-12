@@ -7,12 +7,13 @@ A responsive Next.js + TypeScript website for an industrial fabrication and 3D-p
 ```powershell
 Copy-Item .env.example .env.local
 npm install
+npm run db:migrate
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-The sample `.env.example` contains the local administrator sign-in values. Replace `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` with strong production values before deploying.
+Add the Neon PostgreSQL connection string as `DATABASE_URL` in `.env.local`. The migration command creates the tables and safely imports any legacy JSON records. Replace `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` with strong production values before deploying.
 
 ## Arvan Cloud image uploads
 
@@ -23,9 +24,10 @@ Add these values to `.env.local` before using uploads:
 ```env
 ARVAN_ACCESS_KEY=...
 ARVAN_SECRET_KEY=...
-ARVAN_BUCKET=robotsaz-portfolio
-ARVAN_ENDPOINT=https://s3.ir-thr-at1.arvanstorage.ir
-ARVAN_PUBLIC_BASE_URL=https://robotsaz-portfolio.s3.ir-thr-at1.arvanstorage.ir
+ARVAN_BUCKET=your-bucket-name
+ARVAN_ENDPOINT=https://your-s3-endpoint.example
+ARVAN_REGION=your-region
+ARVAN_PUBLIC_BASE_URL=https://your-public-media-host.example
 ```
 
 Make sure the bucket permits public reads for uploaded project images. The access key and secret must remain server-only and should never have a `NEXT_PUBLIC_` prefix.
@@ -42,6 +44,6 @@ Make sure the bucket permits public reads for uploaded project images. The acces
 
 ## Data and deployment notes
 
-Projects are initially seeded in `data/projects.json`; the protected API updates that file so the app works immediately in a local Node deployment. For a serverless or multi-instance production deployment, replace the small repository in `lib/projects.ts` with a database (for example PostgreSQL + Prisma).
+Projects, customer contact details, request descriptions, attachment metadata, and four-digit order numbers are stored in Neon PostgreSQL. Uploaded files remain in private object storage; only their metadata and storage keys are stored in PostgreSQL. The files in `data/` are retained solely as a migration backup and are no longer read by the running website.
 
 `/api/contact` validates and rate-limits submissions and returns a success response. Connect a transactional email provider such as Resend or Postmark in that route before using it for live customer enquiries.

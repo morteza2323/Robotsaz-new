@@ -21,8 +21,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Please enter a valid email and password." }, { status: 400 });
   }
 
-  const expectedEmail = process.env.ADMIN_EMAIL || "admin@forgeworks.example";
-  const expectedPassword = process.env.ADMIN_PASSWORD || "Forgeworks!2026";
+  const expectedEmail = process.env.ADMIN_EMAIL;
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+  if (!expectedEmail || !expectedPassword) {
+    return NextResponse.json({ message: "Administrator login is not configured." }, { status: 503 });
+  }
   if (!matches(parsed.data.email.toLowerCase(), expectedEmail.toLowerCase()) || !matches(parsed.data.password, expectedPassword)) {
     return NextResponse.json({ message: "That email or password is not recognised." }, { status: 401 });
   }

@@ -28,3 +28,6 @@ export const projectKindLabels: Record<ProjectKind, string> = {
   industry: "Industrial Projects",
   printing: "3D Printing Projects",
 };
+
+export type CustomPartFile = { key: string; name: string; size: number; contentType: string };
+export type CustomPartRequest = { id: string; orderNumber: number; name: string; email: string; phone: string; description: string; quantity?: string; material?: string; files: CustomPartFile[]; status: "new" | "contacted" | "quoted" | "closed"; createdAt: string };
