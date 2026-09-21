@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
+  metadataBase:new URL('https://www.robotsaz.com'),
   title: {
     default: "Robotsaz | Built for what is next",
     template: "%s | Robotsaz",
