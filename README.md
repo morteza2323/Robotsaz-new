@@ -46,6 +46,6 @@ Make sure the bucket permits public reads for uploaded project images. The acces
 
 Projects, customer contact details, request descriptions, attachment metadata, and four-digit order numbers are stored in PostgreSQL. Uploaded files remain in private object storage; only their metadata and storage keys are stored in PostgreSQL. The files in `data/` are retained solely as a migration backup and are no longer read by the running website.
 
-To copy an existing PostgreSQL database into a new one, set `SOURCE_DATABASE_URL` to the old database and `DESTINATION_DATABASE_URL` to the new database, then run `npm run db:transfer`. The transfer is idempotent and preserves request order numbers. Once it succeeds, set `DATABASE_URL` to the destination URL and remove the two temporary transfer variables.
+To copy an existing PostgreSQL database into a new one, set `SOURCE_DATABASE_URL` to the old database and `DESTINATION_DATABASE_URL` to the new database, then deploy or run `npm run db:transfer`. The deployment prebuild step performs the same idempotent transfer and preserves request order numbers. Once it succeeds, set `DATABASE_URL` to the destination URL, remove the two temporary transfer variables, and deploy again.
 
 `/api/contact` validates and rate-limits submissions and returns a success response. Connect a transactional email provider such as Resend or Postmark in that route before using it for live customer enquiries.

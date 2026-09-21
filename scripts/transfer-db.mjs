@@ -4,8 +4,13 @@ import "./load-local-env.mjs";
 const sourceConnectionString = process.env.SOURCE_DATABASE_URL;
 const destinationConnectionString = process.env.DESTINATION_DATABASE_URL;
 
-if (!sourceConnectionString) throw new Error("SOURCE_DATABASE_URL is not configured.");
-if (!destinationConnectionString) throw new Error("DESTINATION_DATABASE_URL is not configured.");
+if (!sourceConnectionString && !destinationConnectionString) {
+  console.log("Database transfer skipped: migration variables are not configured.");
+  process.exit(0);
+}
+if (!sourceConnectionString || !destinationConnectionString) {
+  throw new Error("Both SOURCE_DATABASE_URL and DESTINATION_DATABASE_URL must be configured.");
+}
 if (sourceConnectionString === destinationConnectionString) {
   throw new Error("Source and destination databases must be different.");
 }
