@@ -1,46 +1,29 @@
 import "server-only";
-import { neon } from "@neondatabase/serverless";
+import { Pool, type QueryResultRow } from "pg";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is not configured.");
 
-const sql = neon(connectionString, { fullResults: true });
-let lastSuccessfulConnection = 0;
-let unavailableUntil = 0;
-let connectionCheck: Promise<void> | null = null;
+const poolSize = Number.parseInt(process.env.DB_POOL_MAX || "10", 10);
+const globalForDatabase = globalThis as typeof globalThis & {
+  forgeworksDatabasePool?: Pool;
+};
 
-async function ensureConnection() {
-  const now = Date.now();
-  if (now < unavailableUntil) throw new Error("Database is temporarily unavailable.");
-  if (now - lastSuccessfulConnection < 30_000) return;
-  if (!connectionCheck) {
-    connectionCheck = sql.query("SELECT 1", [], {
-      fetchOptions: { signal: AbortSignal.timeout(5_000) },
-    }).then(() => {
-      lastSuccessfulConnection = Date.now();
-      unavailableUntil = 0;
-    }).catch(() => {
-      unavailableUntil = Date.now() + 15_000;
-      throw new Error("Database is temporarily unavailable.");
-    }).finally(() => {
-      connectionCheck = null;
-    });
-  }
-  await connectionCheck;
-}
+const pool = globalForDatabase.forgeworksDatabasePool ?? new Pool({
+  connectionString,
+  max: Number.isFinite(poolSize) && poolSize > 0 ? poolSize : 10,
+  connectionTimeoutMillis: 10_000,
+  idleTimeoutMillis: 30_000,
+  allowExitOnIdle: false,
+});
+
+// Reuse the pool during Next.js development reloads instead of opening new
+// connections for every compiled server module.
+globalForDatabase.forgeworksDatabasePool = pool;
 
 export const database = {
-  async query<Row>(query: string, parameters: unknown[] = []) {
-    await ensureConnection();
-    try {
-      const result = await sql.query(query, parameters, {
-        fetchOptions: { signal: AbortSignal.timeout(10_000) },
-      });
-      lastSuccessfulConnection = Date.now();
-      return result as unknown as { rows: Row[]; rowCount: number };
-    } catch (error) {
-      unavailableUntil = Date.now() + 15_000;
-      throw error;
-    }
+  async query<Row extends QueryResultRow = QueryResultRow>(query: string, parameters: unknown[] = []) {
+    const result = await pool.query<Row>(query, parameters);
+    return { rows: result.rows, rowCount: result.rowCount ?? 0 };
   },
 };

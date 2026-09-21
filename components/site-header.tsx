@@ -20,8 +20,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-[#d5dad2] bg-[#f4f4ef]/92 backdrop-blur">
       <div className="container flex h-[4.5rem] items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 font-black tracking-[-.08em]" aria-label="ForgeWorks home">
-          <span className="grid h-7 w-7 place-items-center bg-[#10201e] text-sm text-[#c7f36b]">F</span>
-          <span className="text-xl">FORGEWORKS</span>
+          <span className="grid h-7 w-7 place-items-center bg-[#10201e] text-sm text-[#c7f36b]">R</span>
+          <span className="text-xl">ROBOTSAZ</span>
         </Link>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {links.map((link) => (

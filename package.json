@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "node --env-file=.env.local scripts/migrate-db.mjs"
+    "db:migrate": "node scripts/migrate-db.mjs",
+    "db:transfer": "node scripts/transfer-db.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1121.0",
     "@hookform/resolvers": "^5.0.1",
-    "@neondatabase/serverless": "^1.1.0",
     "framer-motion": "^12.9.2",
     "jose": "^6.0.10",
     "lucide-react": "^0.511.0",
