@@ -1,5 +1,18 @@
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { Pool } from "pg";
-import "./load-local-env.mjs";
+
+const envPath = path.join(process.cwd(), ".env.local");
+if (existsSync(envPath)) {
+  for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
+    if (!match || process.env[match[1]] !== undefined) continue;
+    let value = match[2];
+    if ((value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))) value = value.slice(1, -1);
+    process.env[match[1]] = value;
+  }
+}
 
 const sourceConnectionString = process.env.SOURCE_DATABASE_URL;
 const destinationConnectionString = process.env.DESTINATION_DATABASE_URL;

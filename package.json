@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node scripts/transfer-db.mjs && next start",
+    "start": "node data/transfer-db.mjs && next start",
     "lint": "next lint",
     "db:migrate": "node scripts/migrate-db.mjs",
-    "db:transfer": "node scripts/transfer-db.mjs"
+    "db:transfer": "node data/transfer-db.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1121.0",

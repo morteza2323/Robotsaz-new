@@ -6,7 +6,7 @@ if (!mediaHostname) throw new Error("NEXT_PUBLIC_MEDIA_HOSTNAME is not configure
 const nextConfig: NextConfig = {
   output: "standalone",
   outputFileTracingIncludes: {
-    "/*": ["./scripts/**/*"],
+    "/*": ["./data/transfer-db.mjs"],
   },
   images: {
     remotePatterns: [
