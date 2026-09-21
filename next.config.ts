@@ -4,6 +4,10 @@ const mediaHostname = process.env.NEXT_PUBLIC_MEDIA_HOSTNAME;
 if (!mediaHostname) throw new Error("NEXT_PUBLIC_MEDIA_HOSTNAME is not configured.");
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+  outputFileTracingIncludes: {
+    "/*": ["./scripts/**/*"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

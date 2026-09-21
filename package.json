@@ -4,9 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/transfer-db.mjs",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/transfer-db.mjs && next start",
     "lint": "next lint",
     "db:migrate": "node scripts/migrate-db.mjs",
     "db:transfer": "node scripts/transfer-db.mjs"
