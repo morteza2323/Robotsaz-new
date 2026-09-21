@@ -15,8 +15,9 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { getFeaturedProjects } from "@/lib/projects";
 import { CustomPartForm } from "@/components/custom-part-form";
+import Image from "next/image";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 const advantages = [
   [
@@ -77,7 +78,7 @@ export default async function HomePage() {
             </Reveal>
             <Reveal delay={0.16}>
               <p className="mt-7 max-w-xl text-lg leading-8 text-[#d7e0db]">
-                ForgeWorks creates the machinery, systems, prototypes, and
+                Robotsaz creates the machinery, systems, prototypes, and
                 production tools that carry ambitious ideas into the real world.
               </p>
             </Reveal>
@@ -245,9 +246,10 @@ export default async function HomePage() {
 
       <section className="container py-18 md:py-28">
         <div className="grid overflow-hidden rounded-2xl bg-[#dfe5dc] lg:grid-cols-[.9fr_1.1fr]">
+          {/* <Image src={'/robotsaz-factory.webp'} alt="Robotsaz Factory" width={`100`} height={100} className="min-h-[300px] h-full w-full object-cover" /> */}
           <img
-            src="/factory.avif"
-            alt="ForgeWorks workshop"
+            src="/robotsaz-factory.webp"
+            alt="Robotsaz workshop"
             className="min-h-[300px] h-full w-full object-cover"
           />
           <Reveal className="p-8 md:p-14">
@@ -256,7 +258,7 @@ export default async function HomePage() {
               Made by people who care how things are made.
             </h2>
             <p className="mt-6 body-copy">
-              ForgeWorks began with a small workshop, a handful of tools, and a
+              Robotsaz began with a small workshop, a handful of tools, and a
               belief that industrial work should be both intelligent and honest.
               Today, we bring fabrication and additive manufacturing together to
               solve the practical problems behind better products.

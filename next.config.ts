@@ -5,9 +5,6 @@ if (!mediaHostname) throw new Error("NEXT_PUBLIC_MEDIA_HOSTNAME is not configure
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  outputFileTracingIncludes: {
-    "/*": ["./data/transfer-db.mjs"],
-  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },

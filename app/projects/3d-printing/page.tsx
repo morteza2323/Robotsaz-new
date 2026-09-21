@@ -5,7 +5,7 @@ import { getProjects } from "@/lib/projects";
 import { CustomPartForm } from "@/components/custom-part-form";
 
 export const metadata: Metadata = { title: "3D printing projects" };
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export default async function PrintingProjectsPage() {
   const projects = await getProjects("printing");

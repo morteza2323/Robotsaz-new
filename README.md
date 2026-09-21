@@ -7,13 +7,12 @@ A responsive Next.js + TypeScript website for an industrial fabrication and 3D-p
 ```powershell
 Copy-Item .env.example .env.local
 npm install
-npm run db:migrate
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-Add the PostgreSQL connection string as `DATABASE_URL` in `.env.local`. The migration command creates the tables and safely imports any legacy JSON records. Replace `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` with strong production values before deploying.
+Add the PostgreSQL connection string as `DATABASE_URL` in `.env.local`. Replace `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and `JWT_SECRET` with strong production values before deploying.
 
 ## Arvan Cloud image uploads
 
@@ -44,8 +43,6 @@ Make sure the bucket permits public reads for uploaded project images. The acces
 
 ## Data and deployment notes
 
-Projects, customer contact details, request descriptions, attachment metadata, and four-digit order numbers are stored in PostgreSQL. Uploaded files remain in private object storage; only their metadata and storage keys are stored in PostgreSQL. The files in `data/` are retained solely as a migration backup and are no longer read by the running website.
-
-To copy an existing PostgreSQL database into a new one, set `SOURCE_DATABASE_URL` to the old database and `DESTINATION_DATABASE_URL` to the new database, then deploy or run `npm run db:transfer`. The runtime-preserved transfer utility in `data/transfer-db.mjs` performs the idempotent transfer from inside Liara's private network and preserves request order numbers. Once it succeeds, set `DATABASE_URL` to the destination URL, remove the two temporary transfer variables, and deploy again.
+Projects, customer contact details, request descriptions, attachment metadata, and four-digit order numbers are stored exclusively in PostgreSQL. Uploaded files remain in private object storage; only their metadata and storage keys are stored in PostgreSQL. Database-backed pages query PostgreSQL at request time and do not use JSON snapshots or migration fallbacks.
 
 `/api/contact` validates and rate-limits submissions and returns a success response. Connect a transactional email provider such as Resend or Postmark in that route before using it for live customer enquiries.

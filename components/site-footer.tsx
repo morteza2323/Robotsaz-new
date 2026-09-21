@@ -12,7 +12,7 @@ export function SiteFooter() {
     <footer className="bg-[#10201e] py-14 text-[#f4f4ef]">
       <div className="container grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
         <div>
-          <div className="text-2xl font-black tracking-[-.08em]">FORGEWORKS</div>
+          <div className="text-2xl font-black tracking-[-.08em]">ROBOTSAZ</div>
           <p className="mt-4 max-w-xs text-sm leading-6 text-[#b7c3bd]">Industrial problem-solving and additive manufacturing, built with care from first sketch to final install.</p>
           <a href={`mailto:${contactEmail}`} className="mt-5 inline-block text-sm font-bold text-[#c7f36b]">{contactEmail}</a>
         </div>
@@ -25,7 +25,7 @@ export function SiteFooter() {
           </div>
         ))}
       </div>
-      <div className="container mt-12 border-t border-white/15 pt-5 text-xs text-[#8fa097]">© {new Date().getFullYear()} ForgeWorks. Built for what is next.</div>
+      <div className="container mt-12 border-t border-white/15 pt-5 text-xs text-[#8fa097]">© {new Date().getFullYear()} Robotsaz. Built for what is next.</div>
     </footer>
   );
 }

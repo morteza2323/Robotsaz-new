@@ -30,7 +30,7 @@ export default function AboutPage() {
     <>
       <section className="container py-16 md:py-24">
         <Reveal>
-          <p className="eyebrow">About ForgeWorks</p>
+          <p className="eyebrow">About Robotsaz</p>
           <h1 className="display mt-5 max-w-5xl">
             A more thoughtful kind of{" "}
             <span className="text-[#719a2a]">industrial partner.</span>
@@ -58,7 +58,7 @@ export default function AboutPage() {
             </h2>
             <div className="mt-6 max-w-xl space-y-4 leading-7 text-[#bdcac3]">
               <p>
-                ForgeWorks started as a close-knit team taking on the complex
+                Robotsaz started as a close-knit team taking on the complex
                 fabrication work that other shops avoided. Our earliest projects
                 taught us to be rigorous, resourceful, and plain-spoken with
                 clients.
@@ -115,7 +115,7 @@ export default function AboutPage() {
               <div className="mt-8 flex gap-3 text-sm">
                 <MapPin className="shrink-0 text-[#719a2a]" size={19} />
                 <span>
-                  <strong>ForgeWorks Studio</strong>
+                  <strong>Robotsaz Studio</strong>
                   <br />
                   {companyAddress}
                 </span>
@@ -123,7 +123,7 @@ export default function AboutPage() {
             </div>
             <div className="min-h-[320px] bg-[#dfe5dc]">
               <iframe
-                title="ForgeWorks location"
+                title="Robotsaz location"
                 className="h-full min-h-[320px] w-full border-0"
                 loading="lazy"
                 src={mapEmbedUrl}

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return { title: project ? project.title : "Project not found" };
 }
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { contactEmail } = getSiteConfig();

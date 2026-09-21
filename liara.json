@@ -1,5 +1,8 @@
 {
-"build": {
-   "location": "germany"
-}
+  "build": {
+    "location": "germany"
+  },
+  "next": {
+    "mirror": false
+  }
 }
